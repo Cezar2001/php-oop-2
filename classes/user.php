@@ -7,10 +7,13 @@ class User extends CreditCard{
     protected string $surName;
     protected string $email;
     protected bool $registered = false;
-    protected int $discount;
+    protected int $discount = 20;
 
     public function __construct(string $_name, string $_surName, string $_email,
-    bool $_registered, int $_discount){
+    bool $_registered, int $_discount, string $_cardNumber, int $_cardCvvCode,
+    string $_cardExpiringDate){
+        parent:: __construct($_cardNumber, $_cardCvvCode, $_cardExpiringDate);
+        
         $this-> name = $_name;
         $this-> surName = $_surName;
         $this-> email = $_email;
@@ -91,11 +94,15 @@ class User extends CreditCard{
      *
      * @return  self
      */ 
-    public function setRegistered($registered)
+    public function setRegistered($price = 0)
     {
-        $this->registered = $registered;
-
-        return $this;
+        if($this->registered == true){
+            $priceDiscount = ($this-> discount / 100) * $price;
+            $totalPrice = $price - $priceDiscount;
+            return $totalPrice;
+        } else{
+            return $price;
+        }
     }
 
     /**

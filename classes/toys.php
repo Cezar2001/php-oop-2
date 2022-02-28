@@ -10,6 +10,8 @@ class Toys extends Products{
 
     public function __construct(string $_name, string $_description, float $_price,
     string $_material, string $_color, string $_form){
+        parent:: __construct($_name, $_description, $_price);
+
         $this-> material = $_material;
         $this-> color = $_color;
         $this-> form = $_form;

@@ -10,6 +10,8 @@ class AnimalBad extends Products{
 
     public function __construct(string $_name, string $_description, float $_price,
     string $_material, string $_color, string $_size){
+        parent:: __construct($_name, $_description, $_price);
+
         $this-> material = $_material;
         $this-> color = $_color;
         $this-> size = $_size;

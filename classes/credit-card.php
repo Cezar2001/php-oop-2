@@ -5,8 +5,7 @@ class CreditCard{
     protected int $cardCvvCode;
     protected string $cardExpiringDate;
 
-    public function __construct(string $_name, string $_surName, string $_email,
-    bool $_registered, int $_discount, string $_cardNumber, int $_cardCvvCode,
+    public function __construct(string $_cardNumber, int $_cardCvvCode,
     string $_cardExpiringDate){
         $this-> cardNumber = $_cardNumber;
         $this-> cardCvvCode = $_cardCvvCode;

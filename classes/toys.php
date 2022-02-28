@@ -7,7 +7,13 @@ class Toys extends Products{
     protected string $material;
     protected string $color;
     protected string $form;
-    
+
+    public function __construct(string $_name, string $_description, float $_price,
+    string $_material, string $_color, string $_form){
+        $this-> material = $_material;
+        $this-> color = $_color;
+        $this-> form = $_form;
+    }
 
     /**
      * Get the value of material

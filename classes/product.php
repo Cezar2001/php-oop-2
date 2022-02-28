@@ -6,6 +6,11 @@ class Products {
     protected string $description;
     protected float $price;
 
+    public function __construct(string $_name, string $_description, float $_price){
+        $this-> name = $_name;
+        $this-> description = $_description;
+        $this-> price = $_price;
+    }
 
     /**
      * Get the value of name

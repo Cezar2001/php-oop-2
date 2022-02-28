@@ -4,10 +4,18 @@ require_once __DIR__ . "/product.php";
 
 class Food extends Products{
     
-    protected int $type;
-    protected int $tastes;
-    protected int $wight;
+    protected string $type;
+    protected string $tastes;
+    protected int $weight;
     protected int $quantity;
+
+    public function __construct(string $_name, string $_description, float $_price,
+    string $_type, string $_tastes, int $_weight, int $_quantity){
+        $this-> type = $_type;
+        $this-> tastes = $_tastes;
+        $this-> weight = $_weight;
+        $this-> quantity = $_quantity;
+    }
 
     /**
      * Get the value of type

@@ -6,8 +6,17 @@ class User extends CreditCard{
     protected string $name;
     protected string $surName;
     protected string $email;
-    protected string $registered;
-    protected string $discount;
+    protected bool $registered = false;
+    protected int $discount;
+
+    public function __construct(string $_name, string $_surName, string $_email,
+    bool $_registered, int $_discount){
+        $this-> name = $_name;
+        $this-> surName = $_surName;
+        $this-> email = $_email;
+        $this-> registered = $_registered;
+        $this-> discount = $_discount;
+    }
 
     /**
      * Get the value of name

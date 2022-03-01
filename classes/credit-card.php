@@ -3,13 +3,13 @@
 class CreditCard{
     protected string $cardNumber;
     protected int $cardCvvCode;
-    protected string $cardExpiringDate;
+    protected DateTime $cardExpiringDate;
 
     public function __construct(string $_cardNumber, int $_cardCvvCode,
     string $_cardExpiringDate){
-        $this-> cardNumber = $_cardNumber;
-        $this-> cardCvvCode = $_cardCvvCode;
-        $this-> cardExpiringDate = $_cardExpiringDate;
+        $this->setCardNumber($_cardNumber);
+        $this->setCardCvvCode($_cardCvvCode);
+        $this->setCardExpiringDate($_cardExpiringDate);
     }
 
     /**
@@ -27,13 +27,9 @@ class CreditCard{
      */ 
     public function setCardNumber($cardNumber)
     {
-        if (strlen($cardNumber) == 16) {
-            $this->cardNumber = $cardNumber;
-            return $this;
-        } else {
-            $this->cardNumber = "CARTA INESISTENTE!";
-            return $this;
-        }
+        $this->cardNumber = $cardNumber;
+
+        return $this;
     }
 
     /**
@@ -51,41 +47,30 @@ class CreditCard{
      */ 
     public function setCardCvvCode($cardCvvCode)
     {
-        if(is_int($cardCvvCode) && strlen($cardCvvCode) == 3){
-            $this->cardCvvCode = $cardCvvCode;
-            return $this;
-        } else {
-            $this->cardCvvCode = "CVV NON VALIDO!";
-            return $this;
-        }
-    }
+        $this->cardCvvCode = $cardCvvCode;
 
+        return $this;
+    }    
+    
     /**
-     * Get the value of carExpiringDate
+     * Get the value of cardExpiringDate
      */ 
-    public function getCarExpiringDate()
+    public function getCardExpiringDate()
     {
-        return $this->carExpiringDate;
+        return $this->cardExpiringDate;
     }
 
     /**
-     * Set the value of carExpiringDate
+     * Set the value of cardExpiringDate
      *
      * @return  self
      */ 
     public function setCardExpiringDate($cardExpiringDate)
     {
-        $currentDate = date('m.d.y');
-        $expireDate = date_create($cardExpiringDate);
-        
-        if($expireDate <  $currentDate){   
-            $this->cardExpiringDate = "CARTA NON VALIDA!";
-            return $this;
-        }
-
         $this->cardExpiringDate = $cardExpiringDate;
 
+        return $this;
     }
-}
 
+}
 ?>

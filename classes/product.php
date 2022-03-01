@@ -1,15 +1,36 @@
 <?php 
 
 class Products {
-
+    protected string $id;
     protected string $name;
     protected string $description;
     protected float $price;
 
-    public function __construct(string $_name, string $_description, float $_price){
-        $this-> name = $_name;
-        $this-> description = $_description;
-        $this-> price = $_price;
+    public function __construct(string $_name, float $_price){
+        $this->setName($_name);
+        $this->setPrice($_price);
+
+        $this->id = uniqid();
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

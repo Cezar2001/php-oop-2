@@ -3,18 +3,16 @@
 require_once __DIR__ . "/product.php";
 
 class Toys extends Products{
-
+    protected string $animalDestination;
     protected string $material;
     protected string $color;
     protected string $form;
 
-    public function __construct(string $_name, string $_description, float $_price,
-    string $_material, string $_color, string $_form){
-        parent:: __construct($_name, $_description, $_price);
-
-        $this-> material = $_material;
-        $this-> color = $_color;
-        $this-> form = $_form;
+    public function __construct(string $_name, float $_price, 
+    string $_animalDestination){
+        parent:: __construct($_name, $_price);
+        
+        $this-> setAnimalDestination($_animalDestination);
     }
 
     /**
@@ -73,6 +71,26 @@ class Toys extends Products{
     public function setForm($form)
     {
         $this->form = $form;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of animalDestination
+     */ 
+    public function getAnimalDestination()
+    {
+        return $this->animalDestination;
+    }
+
+    /**
+     * Set the value of animalDestination
+     *
+     * @return  self
+     */ 
+    public function setAnimalDestination($animalDestination)
+    {
+        $this->animalDestination = $animalDestination;
 
         return $this;
     }

@@ -1,22 +1,22 @@
 <?php 
 
-include __DIR__ . "/db/database.php"
+require_once __DIR__ . "/classes/animal-bed.php";
+require_once __DIR__ . "/classes/food.php";
+require_once __DIR__ . "/classes/toys.php";
+require_once __DIR__ . "/classes/user.php";
 
+$palla = new Toys("Palla di gomma", 5.50, "cani");
+$corda = new Toys("Corda alla menta", 2.50, "cani");
+$pate = new Food("Paté", 2.50, "gatti", "pollo");
 
+$user = new User();
+$user->addToCart($palla);
+$user->addToCart($palla);
+$user->addToCart($corda);
+$user->addToCart($corda);
+$user->addToCart($corda);
+$user->addToCart($pate);
 
+var_dump($user)
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-
-</body>
-</html>

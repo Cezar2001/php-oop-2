@@ -9,13 +9,13 @@ class Food extends Products{
     protected int $weight;
     protected int $quantity;
 
-    public function __construct(string $_name, string $_description, float $_price,
-    string $_type, string $_tastes, int $_weight, int $_quantity){
-        parent:: __construct($_name, $_description, $_price);
-        $this-> type = $_type;
-        $this-> tastes = $_tastes;
-        $this-> weight = $_weight;
-        $this-> quantity = $_quantity;
+    protected $animalDestination;
+
+    public function __construct(string $_name, float $_price, string $_animalDestination, string $_tastes){
+        parent:: __construct($_name, $_price);
+        
+        $this-> setAnimalDestination($_animalDestination);
+        $this->setTastes($_tastes);
     }
 
     /**
@@ -94,6 +94,26 @@ class Food extends Products{
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of animalDestination
+     */ 
+    public function getAnimalDestination()
+    {
+        return $this->animalDestination;
+    }
+
+    /**
+     * Set the value of animalDestination
+     *
+     * @return  self
+     */ 
+    public function setAnimalDestination($animalDestination)
+    {
+        $this->animalDestination = $animalDestination;
 
         return $this;
     }

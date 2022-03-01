@@ -1,26 +1,25 @@
 <?php 
 
 require_once __DIR__ . "/credit-card.php";
+require_once __DIR__ . "/cart-product.php";
 
-class User extends CreditCard{
+class User {
     protected string $name;
     protected string $surName;
     protected string $email;
     protected bool $registered = false;
+
     protected int $discount = 20;
 
-    public function __construct(string $_name, string $_surName, string $_email,
-    bool $_registered, int $_discount, string $_cardNumber, int $_cardCvvCode,
-    string $_cardExpiringDate){
-        parent:: __construct($_cardNumber, $_cardCvvCode, $_cardExpiringDate);
-        
-        $this-> name = $_name;
-        $this-> surName = $_surName;
-        $this-> email = $_email;
-        $this-> registered = $_registered;
-        $this-> discount = $_discount;
-    }
+    protected array $cart = [];
+    protected float $cartTotal = 0;
 
+    protected ?CreditCard $creditCard = null;
+
+    function __construct(){
+        
+    }
+    
     /**
      * Get the value of name
      */ 
@@ -84,7 +83,7 @@ class User extends CreditCard{
     /**
      * Get the value of registered
      */ 
-    public function getRegistered()
+    public function getRegistered(): bool
     {
         return $this->registered;
     }
@@ -94,36 +93,120 @@ class User extends CreditCard{
      *
      * @return  self
      */ 
-    public function setRegistered($price = 0)
+    public function setRegistered($registered)
     {
-        if($this->registered == true){
-            $priceDiscount = ($this-> discount / 100) * $price;
-            $totalPrice = $price - $priceDiscount;
-            return $totalPrice;
-        } else{
-            return $price;
-        }
+        $this->registered = $registered;
+
+        return $this;
     }
 
     /**
      * Get the value of discount
+     * no discount
      */ 
-    public function getDiscount()
+    public function getDiscount(): int
     {
-        return $this->discount;
+        return $this->registered ? $this->discount : 0;
+    }
+
+
+    /**
+     * Get the value of cart
+     */ 
+    public function getCart()
+    {
+        return $this->cart;
     }
 
     /**
-     * Set the value of discount
+     * Set the value of cart
      *
      * @return  self
      */ 
-    public function setDiscount($discount)
+    public function setCart($cart)
     {
-        $this->discount = $discount;
+        $this->cart = $cart;
 
         return $this;
     }
+
+    /**
+     * Get the value of cartTotal +
+     * discount
+     */ 
+    public function getCartTotal(): float
+    {
+        if ($this->registered) {
+            return $this->cartTotal - (($this->cartTotal * $this->getDiscount()) / 100);
+        }
+        return $this->cartTotal;
+    }
+
+    /**
+     * Set the value of cartTotal
+     *
+     * @return  self
+     */ 
+    public function setCartTotal($cartTotal)
+    {
+        $this->cartTotal = $cartTotal;
+
+        return $this;
+    }
+
+    /**
+     * carta credito
+     */
+    public function getCreditCard(): ?CreditCard {
+        return $this-> creditCard;
+    }
+
+    public function setCreditCard(string $cardNumber, int $cardCvvCode, string $cardExpiringDate){
+        if(( !isset($this->name) || !isset($this->surName)) && is_null($this->email)){
+            return false;
+        } else {
+            $this->creditCard = new CreditCard($cardNumber, $cardCvvCode, $cardExpiringDate);
+        }
+    }
+
+    protected function productInCart(string $needId) {
+        $found = false;
+
+        foreach($this->getCart() as $key => $cartProduct){
+            $productId = $cartProduct->getProduct()->getId();
+
+            if($productId == $needId) {
+                $found = $key;
+
+                break;
+            }
+        }
+        return $found;
+    }
+
+    public function addToCart($product) {
+        $exist = $this->productInCart($product->getId());
+
+        if ($exist !== false) {
+            $this->cart[$exist]->increaseQuantity();          
+        } else {
+            $cartProduct = new CartProduct($product);
+            $this->cart[] = $cartProduct;
+        }
+
+        $this->newCartPrice();
+    }
+
+    private function newCartPrice() {
+        $sum = 0;
+        
+        foreach ($this->getCart() as $product) {
+          $sum += $product->getTotalPrice();
+        }
+        
+        $this->cartTotal = $sum;
+      }
+
 }
 
 ?>

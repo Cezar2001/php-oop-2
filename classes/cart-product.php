@@ -27,7 +27,7 @@ class CartProduct {
     public function setQuantity(int $quantity)
     {
         $this->quantity = $quantity;
-        $this->totalPrice = $this->quantity * $this->getProduct()->getPrice();
+        $this->totalPrice = $this->quantity * $this->getProduct();
     }
 
     public function increaseQuantity(int $quantity = 1){
